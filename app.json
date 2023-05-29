@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "project",
-    "slug": "project",
+    "name": "TO-DO",
+    "slug": "TO-DO",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/splash/splashimg.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
