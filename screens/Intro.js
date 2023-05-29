@@ -13,8 +13,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Intro({ onLayout }) {
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
+  const [name, setName] = useState("")
   const [buttonPress, setButtonPress] = useState(false)
 
 
@@ -25,8 +24,6 @@ export default function Intro({ onLayout }) {
   const submit = () => {
    setButtonPress(true)
   };
-
-  console.log(error, buttonPress);
 
   const MyStatusBar = () => (
     <SafeAreaView
