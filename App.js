@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // React Navigation Screens
 import Intro from "./screens/Intro";
+import Todo from "./screens/Todo";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -70,7 +71,10 @@ export default function App() {
         headerShown: false,
       }}>
         <Stack.Screen name="Intro">
-          {(props) => <Intro onLayout={onLayoutRootView} />}
+          {(props) => <Intro onLayout={onLayoutRootView} {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name="Todo">
+          {(props) => <Todo onLayout={onLayoutRootView} {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

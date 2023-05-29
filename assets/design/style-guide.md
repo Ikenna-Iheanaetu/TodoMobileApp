@@ -15,8 +15,6 @@ The designs were created to the following widths:
 - Check Background: linear-gradient hsl(192, 100%, 67%) to hsl(280, 87%, 65%)
 
 ### Neutral
-57DDFF
-C058F3
 
 ### Light Theme
 

@@ -11,18 +11,32 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function Intro({ onLayout }) {
-  const [name, setName] = useState("")
-  const [buttonPress, setButtonPress] = useState(false)
+export default function Intro({ onLayout, navigation }) {
+  const [name, setName] = useState("");
+  const [buttonPress, setButtonPress] = useState(false);
 
+  const toTodoScreen = () => navigation.push("Todo");
 
   useEffect(() => {
-    setButtonPress(false)
-  }, [name.trim().length <= 0])
+    setButtonPress(false);
+  }, [name.trim().length <= 0]);
 
-  const submit = () => {
-   setButtonPress(true)
+  const submit = async () => {
+    if (name.trim().length >= 0) {
+      setButtonPress(true);
+    }
+
+    if(name.trim().length > 0) {
+      try {
+        const user = { name: name };
+        await AsyncStorage.setItem("user", JSON.stringify(user));
+        toTodoScreen();
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   const MyStatusBar = () => (
@@ -75,8 +89,14 @@ export default function Intro({ onLayout }) {
             </LinearGradient>
           </Pressable>
         </View>
-        {buttonPress == true && name.trim().length <= 0  ? (
-          <Text style={{ color: "#DE0F0F", marginTop: 15, fontFamily: "Josefin400" }}>
+        {buttonPress == true && name.trim().length <= 0 ? (
+          <Text
+            style={{
+              color: "#DE0F0F",
+              marginTop: 15,
+              fontFamily: "Josefin400",
+            }}
+          >
             Kindly enter your name before you continue
           </Text>
         ) : null}
