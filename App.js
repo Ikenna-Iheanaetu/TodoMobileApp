@@ -84,9 +84,9 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator
         initialRouteName="Intro"
-        // screenOptions={{
-        //   headerShown: false,
-        // }}
+        screenOptions={{
+          headerShown: false,
+        }}
       >
         <Drawer.Screen name="Intro">
           {(props) => <Intro onLayout={onLayoutRootView} {...props} />}
@@ -98,24 +98,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-// <Drawer.Navigator initialRouteName="Intro" screenOptions={{
-//   headerShown: false,
-// }}>
-//   <Drawer.Screen name="Todo" component={Todo} />
-//   <Drawer.Screen name="Intro" component={Intro} />
-// </Drawer.Navigator>
-
-// <Stack.Navigator
-//         initialRouteName="Intro"
-//         screenOptions={{
-//           headerShown: false,
-//         }}
-//       >
-//         <Stack.Screen name="Intro">
-//           {(props) => <Intro onLayout={onLayoutRootView} {...props} />}
-//         </Stack.Screen>
-//         <Stack.Screen name="Todo">
-//           {(props) => <Todo onLayout={onLayoutRootView} {...props} />}
-//         </Stack.Screen>
-//       </Stack.Navigator>
