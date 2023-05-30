@@ -4,9 +4,14 @@ import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useFonts } from "expo-font";
 
+// Async Storage
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // React Navigation
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // React Navigation Screens
 import Intro from "./screens/Intro";
@@ -31,6 +36,15 @@ export default function App() {
         await Font.loadAsync(Entypo.font);
         // Artificially delay for two seconds to simulate a slow loading
         // experience. Please remove this if you copy and paste the code!
+
+        // removeValue = async () => {
+        //   try {
+        //     await AsyncStorage.removeItem("user");
+        //   } catch (e) {
+        //     // remove error
+        //   }
+        // };
+        // removeValue();
 
         // await new Promise((resolve) => setTimeout(resolve, 5000));
       } catch (e) {
@@ -63,20 +77,45 @@ export default function App() {
     return null;
   }
 
-  const Stack = createNativeStackNavigator();
+  // const Stack = createNativeStackNavigator();
+  const Drawer = createDrawerNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Intro" screenOptions={{
-        headerShown: false,
-      }}>
-        <Stack.Screen name="Intro">
+      <Drawer.Navigator
+        initialRouteName="Intro"
+        // screenOptions={{
+        //   headerShown: false,
+        // }}
+      >
+        <Drawer.Screen name="Intro">
           {(props) => <Intro onLayout={onLayoutRootView} {...props} />}
-        </Stack.Screen>
-        <Stack.Screen name="Todo">
+        </Drawer.Screen>
+        <Drawer.Screen name="Todo">
           {(props) => <Todo onLayout={onLayoutRootView} {...props} />}
-        </Stack.Screen>
-      </Stack.Navigator>
+        </Drawer.Screen>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
+
+// <Drawer.Navigator initialRouteName="Intro" screenOptions={{
+//   headerShown: false,
+// }}>
+//   <Drawer.Screen name="Todo" component={Todo} />
+//   <Drawer.Screen name="Intro" component={Intro} />
+// </Drawer.Navigator>
+
+// <Stack.Navigator
+//         initialRouteName="Intro"
+//         screenOptions={{
+//           headerShown: false,
+//         }}
+//       >
+//         <Stack.Screen name="Intro">
+//           {(props) => <Intro onLayout={onLayoutRootView} {...props} />}
+//         </Stack.Screen>
+//         <Stack.Screen name="Todo">
+//           {(props) => <Todo onLayout={onLayoutRootView} {...props} />}
+//         </Stack.Screen>
+//       </Stack.Navigator>

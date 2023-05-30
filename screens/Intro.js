@@ -17,7 +17,31 @@ export default function Intro({ onLayout, navigation }) {
   const [name, setName] = useState("");
   const [buttonPress, setButtonPress] = useState(false);
 
-  const toTodoScreen = () => navigation.push("Todo");
+  console.log(name);
+  const toTodoScreen = () => navigation.navigate("Todo");
+
+  useEffect(() => {
+    // The code below will check the async storage if the user has a name in this application
+    // if the user does then the user will be redirected to the todo screen else to the intro screen
+
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("user");
+        if (value !== null) {
+          // value previously stored
+          const toTodoScreen = () => navigation.navigate("Todo");
+          toTodoScreen();
+        } else {
+          return;
+        }
+      } catch (e) {
+        // error reading value
+        console.error(e);
+      }
+    };
+
+    getData();
+  }, []);
 
   useEffect(() => {
     setButtonPress(false);
@@ -28,13 +52,13 @@ export default function Intro({ onLayout, navigation }) {
       setButtonPress(true);
     }
 
-    if(name.trim().length > 0) {
+    if (name.trim().length > 0) {
       try {
         const user = { name: name };
         await AsyncStorage.setItem("user", JSON.stringify(user));
         toTodoScreen();
       } catch (error) {
-        console.error(error);
+        console.error("error: " + error);
       }
     }
   };
