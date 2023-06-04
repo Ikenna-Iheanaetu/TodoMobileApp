@@ -1,68 +1,72 @@
-import React from "react";
-import { useState, useEffect } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
-  Platform,
-  StatusBar,
   StyleSheet,
+  SafeAreaView,
+  StatusBar,
   TextInput,
   Pressable,
 } from "react-native";
+import React, { useState, useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function Intro({ onLayout, navigation }) {
+import { updateData } from "../Todo";
+
+export default function Changename({ onLayout, navigation }) {
   const [name, setName] = useState("");
   const [buttonPress, setButtonPress] = useState(false);
-
-  console.log(name);
-
-  useEffect(() => {
-    // The code below will check the async storage if the user has a name in this application
-    // if the user does then the user will be redirected to the todo screen else to the intro screen
-
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem("user");
-        if (value !== null) {
-          // value previously stored
-          const toTodoScreen = () => navigation.navigate("Home");
-          toTodoScreen();
-        } else {
-          return;
-        }
-      } catch (e) {
-        // error reading value
-        console.error(e);
-      }
-    };
-
-    getData();
-  }, []);
 
   useEffect(() => {
     setButtonPress(false);
   }, [name.trim().length <= 0]);
 
-  const submit = async () => {
-    if (name.trim().length >= 0) {
-      setButtonPress(true);
-    }
 
-    if (name.trim().length > 0) {
-      try {
-        const user = { id: 1, name: name.trim() };
-        await AsyncStorage.setItem("user", JSON.stringify(user));
-        const toTodoScreen = () => navigation.navigate("Home");
-        toTodoScreen();
-      } catch (error) {
-        console.error("error: " + error);
-      }
-    }
-  };
+
+  function submit(){
+    updateData(name, setButtonPress, navigation)
+  }
+
+  // const submit = async () => {
+  //   if (name.trim().length >= 0) {
+  //     setButtonPress(true);
+  //   }
+
+    // if (name.trim().length > 0) {
+    //   try {
+    //     console.log(name);
+
+    //     const value = await AsyncStorage.getItem("user");
+    //     // let userName = []
+    //     console.log(value);
+
+    //     // if (value !== null) userName = JSON.parse(value)
+    //     // if (value !== null) userName.push(value)
+
+    //     // const newUserName = userName.filter(change => {
+    //     //   if (change.id == 1) change.name = name.trim()
+    //     //   return change
+    //     // })
+
+    //     // await AsyncStorage.removeItem('user')
+
+    //     const item = { name: name.trim() }
+
+    //     await AsyncStorage.mergeItem("user", JSON.stringify(item))
+
+    //     // const newValue = await AsyncStorage.getItem("user");
+    //     // console.log(newValue);
+
+
+    //     const toTodoScreen = () => navigation.navigate("Home");
+
+    //     toTodoScreen();
+    //   } catch (error) {
+    //     console.error("error: " + error);
+    //   }
+    // }
+  // };
 
   const MyStatusBar = () => (
     <SafeAreaView
@@ -78,7 +82,7 @@ export default function Intro({ onLayout, navigation }) {
     <View style={{ flex: 1, backgroundColor: "#161722" }} onLayout={onLayout}>
       <MyStatusBar />
       <View style={styles.todo}>
-        <Text style={styles.todoText}>TO-DO</Text>
+        <Text style={styles.todoText}>Update your name</Text>
       </View>
       <View
         style={{
@@ -104,7 +108,7 @@ export default function Intro({ onLayout, navigation }) {
             onChangeText={setName}
             value={name}
           />
-          <Pressable onPress={submit}>
+          <Pressable onPress={() => submit()}>
             <LinearGradient
               // Button Linear Gradient
               colors={["#57DDFF", "#C058F3"]}
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
   todoText: {
     fontFamily: "Josefin700",
     color: "#fff",
-    fontSize: 40,
+    fontSize: 25,
   },
   text: {
     fontFamily: "Josefin400",
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     color: "#eee",
     fontSize: 16,
     marginTop: 10,
-    fontFamily: "Josefin400"
+    fontFamily: "Josefin400",
   },
   press: {
     marginTop: 10,

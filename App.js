@@ -3,7 +3,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
 import { useFonts } from "expo-font";
-
+import { Platform } from "react-native"
 // Async Storage
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -16,6 +16,14 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 // React Navigation Screens
 import Intro from "./screens/Intro";
 import Todo from "./screens/Todo";
+import Changename from "./screens/Drawersreens/Changename";
+
+// React Nayive custom Drawer styles
+import Customdrawer from "./components/Customdrawer";
+
+// Drawer Icons
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -84,15 +92,57 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator
         initialRouteName="Intro"
+        drawerContent={(props) => <Customdrawer {...props} />}
         screenOptions={{
           headerShown: false,
+          drawerActiveBackgroundColor: "hsl(234, 11%, 52%)",
+          drawerInactiveBackgroundColor: "hsl(235, 24%, 19%)",
+          drawerActiveTintColor: "hsl(236, 39%, 94%)",
+          drawerInactiveTintColor: "hsl(236, 40%, 92%)",
+          drawerHideStatusBarOnOpen: Platform.OS === "ios" ? true : false,
+          overlayColor: "transparent",
+          drawerStyle: {
+            width: 240,
+            backgroundColor: " hsl(235, 24%, 19%)",
+          },
+          drawerLabelStyle: {
+            marginLeft: -20,
+            fontFamily: "Josefin400"
+          },
+          sceneContainerStyle: {
+            backgroundColor: "hsl(235, 24%, 19%)"
+          }
         }}
       >
-        <Drawer.Screen name="Intro">
+        <Drawer.Screen
+          name="Intro"
+          options={{
+            drawerItemStyle: { display: "none" },
+          }}
+        >
           {(props) => <Intro onLayout={onLayoutRootView} {...props} />}
         </Drawer.Screen>
-        <Drawer.Screen name="Todo">
+        <Drawer.Screen
+          name="Home"
+          options={{
+            // drawerItemStyle: { display: "none" },
+            drawerIcon: () => (
+              <Ionicons name='home' color="#fff" size={20} />
+            )
+          }}
+        >
           {(props) => <Todo onLayout={onLayoutRootView} {...props} />}
+        </Drawer.Screen>
+        <Drawer.Screen
+          name="Change your name"
+          options={{
+            color: "#fff",
+            drawerIcon: () => (
+              <MaterialIcons name='person' color="#fff" size={25} />
+            )
+          }} 
+        >
+          {(props) => <Changename onLayout={onLayoutRootView} {...props} />}
         </Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
